@@ -1,4 +1,4 @@
-package com.example.workflow;
+package com.example.demorestclient;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -17,10 +17,10 @@ public class MyJavaDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        System.out.println("BEGIN " + new Date() +" delegateExecution");
+        System.out.println("\n\n"+"BEGIN " + new Date() +" delegateExecution");
         HttpEntity<Object> httpEntity = new HttpEntity<>(null);
-        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:8080/hello", HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:9080/hello", HttpMethod.GET, httpEntity, String.class);
 
-        System.out.println("\n\n" + new Date() +" delegateExecution, myVariable=" + delegateExecution.getVariable("myVariable") + " TenantId="+delegateExecution.getTenantId() + " Rest="+exchange.getStatusCodeValue());
+        System.out.println(""+new Date() +" delegateExecution, myVariable=" + delegateExecution.getVariable("myVariable") + " TenantId="+delegateExecution.getTenantId() + " Rest="+exchange.getStatusCodeValue());
     }
 }

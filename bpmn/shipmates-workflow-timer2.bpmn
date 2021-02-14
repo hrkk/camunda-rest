@@ -7,6 +7,9 @@
         <camunda:inputOutput>
           <camunda:inputParameter name="myVariable">heps</camunda:inputParameter>
         </camunda:inputOutput>
+        <camunda:properties>
+          <camunda:property name="camunda:failedJobRetryTimeCycle" value="R5/PT5S" />
+        </camunda:properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ljm2o7</bpmn:incoming>
       <bpmn:outgoing>Flow_1uctnxe</bpmn:outgoing>
@@ -18,7 +21,7 @@
     <bpmn:startEvent id="Timer2StartEvent_1" name="Timer2StartEvent_1">
       <bpmn:outgoing>Flow_1ljm2o7</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_159rtfa">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">0/5 * * * * ?</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">1 * * * * ?</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
