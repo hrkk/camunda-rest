@@ -10,7 +10,7 @@ public class RestTemplateConfig {
     @Bean
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler());
+       // restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler());
         return restTemplate;
     }
 }

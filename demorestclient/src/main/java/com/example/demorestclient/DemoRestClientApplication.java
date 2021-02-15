@@ -19,7 +19,7 @@ public class DemoRestClientApplication {
 	@GetMapping("/hello")
 	public ResponseEntity<String> hello() throws InterruptedException {
 		if ("ERROR".equals(state)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("error 404");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error 500");
 		}
 		if("LONG_RUN".equals(state)) {
 			Thread.sleep(25000);
@@ -40,7 +40,7 @@ public class DemoRestClientApplication {
 		return ResponseEntity.ok("state=" + state);
 	}
 
-	@GetMapping("/error-404")
+	@GetMapping("/error-500")
 	public ResponseEntity<String> error() {
 		state = "ERROR";
 		return ResponseEntity.ok("state=" + state);
