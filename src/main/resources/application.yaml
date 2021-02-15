@@ -5,4 +5,16 @@ camunda.bpm.admin-user:
   password: demo
 
 
+#  ---------------------------------
+#   Setup retry
+#   R3 = 3 times
+#   PT5S pause 5 seconds between
+#  ----------------------------------
 camunda.bpm.generic-properties.properties.failed-job-retry-time-cycle: R3/PT5S
+
+# check for a scheduled job every 5 sec. default is 60000/ 1 min
+camunda.bpm.job-execution.max-wait: 5000
+
+# cycle
+# 0/15 * * ? * * -> Every 15 seconds
+# 0 * * ? * * -> At second :00 of every minute
