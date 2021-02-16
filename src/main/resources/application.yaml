@@ -4,6 +4,8 @@ camunda.bpm.admin-user:
   id: demo
   password: demo
 
+# -----------------------------------
+camunda.bpm.auto-deployment-enabled: false
 
 #  ---------------------------------
 #   Setup retry

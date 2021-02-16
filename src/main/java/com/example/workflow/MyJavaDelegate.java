@@ -24,11 +24,12 @@ public class MyJavaDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         JobExecutorContext jobExecutorContext = Context.getJobExecutorContext();
         int retries = jobExecutorContext.getCurrentJob().getRetries();
-        System.out.println("\n\n" + "BEGIN " + new Date() + " TaskId=" + delegateExecution.getId() + ", TenantId=" + delegateExecution.getTenantId() + ", retries=" + retries);
+        System.out.println("\n\n" + "BEGIN " + new Date() + " TaskId=" + delegateExecution.getId() + ", TenantId=" + delegateExecution.getTenantId() + ", retries_left=" + retries);
         // 1. call external service
         int statusCode = connector.execute(delegateExecution.getTenantId());
         if (statusCode != 200) {
             if(retries <=1) {
+                System.err.println("Crete BpmnError!");
                 delegateExecution.setVariable("restErrorCode", statusCode);
                 throw new BpmnError("Error_RestServiceError");
             } else {
