@@ -9,11 +9,12 @@
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ljm2o7</bpmn:incoming>
+      <bpmn:incoming>Flow_0prj1o8</bpmn:incoming>
       <bpmn:outgoing>Flow_1uctnxe</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_0mimqz0">
       <bpmn:incoming>Flow_1uctnxe</bpmn:incoming>
-      <bpmn:incoming>Flow_1jpryo2</bpmn:incoming>
+      <bpmn:incoming>Flow_115sbd9</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1uctnxe" sourceRef="Activity_1rdj0l8" targetRef="Event_0mimqz0" />
     <bpmn:startEvent id="Timer_StartEvent" name="Timer_StartEvent">
@@ -27,15 +28,35 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_19gulpe" errorRef="Error_0z5l47t" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1xdjadc" sourceRef="Event_0gc25qc" targetRef="Activity_0xw5x4f" />
-    <bpmn:userTask id="Activity_0xw5x4f" name="Check failure">
+    <bpmn:sequenceFlow id="Flow_1jpryo2" sourceRef="Activity_0xw5x4f" targetRef="Gateway_1p4v84m" />
+    <bpmn:userTask id="Activity_0xw5x4f" name="Check failure and decide if a retry should be performed">
       <bpmn:incoming>Flow_1xdjadc</bpmn:incoming>
       <bpmn:outgoing>Flow_1jpryo2</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1jpryo2" sourceRef="Activity_0xw5x4f" targetRef="Event_0mimqz0" />
+    <bpmn:exclusiveGateway id="Gateway_1p4v84m">
+      <bpmn:incoming>Flow_1jpryo2</bpmn:incoming>
+      <bpmn:outgoing>Flow_115sbd9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0prj1o8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_115sbd9" name="no - end job" sourceRef="Gateway_1p4v84m" targetRef="Event_0mimqz0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not manualRetryRest} </bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0prj1o8" name="yes - retry" sourceRef="Gateway_1p4v84m" targetRef="Activity_1rdj0l8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{manualRetryRest}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmn:error id="Error_0z5l47t" name="Error_RestServiceError" errorCode="Error_RestServiceError" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="shipmatesTimer">
+      <bpmndi:BPMNEdge id="Flow_1jpryo2_di" bpmnElement="Flow_1jpryo2">
+        <di:waypoint x="580" y="310" />
+        <di:waypoint x="580" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xdjadc_di" bpmnElement="Flow_1xdjadc">
+        <di:waypoint x="420" y="175" />
+        <di:waypoint x="420" y="270" />
+        <di:waypoint x="530" y="270" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1uctnxe_di" bpmnElement="Flow_1uctnxe">
         <di:waypoint x="440" y="117" />
         <di:waypoint x="802" y="117" />
@@ -44,19 +65,27 @@
         <di:waypoint x="228" y="117" />
         <di:waypoint x="340" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xdjadc_di" bpmnElement="Flow_1xdjadc">
-        <di:waypoint x="420" y="175" />
-        <di:waypoint x="420" y="270" />
-        <di:waypoint x="530" y="270" />
+      <bpmndi:BPMNEdge id="Flow_115sbd9_di" bpmnElement="Flow_115sbd9">
+        <di:waypoint x="605" y="410" />
+        <di:waypoint x="820" y="410" />
+        <di:waypoint x="820" y="135" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="700" y="392" width="59" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jpryo2_di" bpmnElement="Flow_1jpryo2">
-        <di:waypoint x="630" y="270" />
-        <di:waypoint x="741" y="270" />
-        <di:waypoint x="741" y="117" />
-        <di:waypoint x="802" y="117" />
+      <bpmndi:BPMNEdge id="Flow_0prj1o8_di" bpmnElement="Flow_0prj1o8">
+        <di:waypoint x="555" y="410" />
+        <di:waypoint x="360" y="410" />
+        <di:waypoint x="360" y="157" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="433" y="392" width="49" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_01xvbgq_di" bpmnElement="Activity_1rdj0l8">
         <dc:Bounds x="340" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mimqz0_di" bpmnElement="Event_0mimqz0">
+        <dc:Bounds x="802" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1oowp8t_di" bpmnElement="Timer_StartEvent">
         <dc:Bounds x="192" y="99" width="36" height="36" />
@@ -64,11 +93,11 @@
           <dc:Bounds x="167" y="142" width="86" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0mimqz0_di" bpmnElement="Event_0mimqz0">
-        <dc:Bounds x="802" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0t8h9o8_di" bpmnElement="Activity_0xw5x4f">
+      <bpmndi:BPMNShape id="Activity_002qpaf_di" bpmnElement="Activity_0xw5x4f">
         <dc:Bounds x="530" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1p4v84m_di" bpmnElement="Gateway_1p4v84m" isMarkerVisible="true">
+        <dc:Bounds x="555" y="385" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1mukvbx_di" bpmnElement="Event_0gc25qc">
         <dc:Bounds x="402" y="139" width="36" height="36" />

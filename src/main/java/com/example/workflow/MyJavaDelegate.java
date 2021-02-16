@@ -23,14 +23,19 @@ public class MyJavaDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         JobExecutorContext jobExecutorContext = Context.getJobExecutorContext();
-        int retries = jobExecutorContext.getCurrentJob().getRetries();
-        System.out.println("\n\n" + "BEGIN " + new Date() + " TaskId=" + delegateExecution.getId() + ", TenantId=" + delegateExecution.getTenantId() + ", retries_left=" + retries);
+        int retriesLeft = 1;
+        // when manuel retry task is invoked then jobExecutorContext is null
+        if(jobExecutorContext!=null) {
+             retriesLeft = jobExecutorContext.getCurrentJob().getRetries();
+        }
+        System.out.println("\n\n" + "BEGIN " + new Date() + " TaskId=" + delegateExecution.getId() + ", TenantId=" + delegateExecution.getTenantId() + ", retries_left=" + retriesLeft+ ", manualRetryRest="+  (delegateExecution.getVariable("manualRetryRest") != null ? "true" : "false"));
         // 1. call external service
         int statusCode = connector.execute(delegateExecution.getTenantId());
         if (statusCode != 200) {
-            if(retries <=1) {
+            if(retriesLeft <=1) {
                 System.err.println("Crete BpmnError!");
                 delegateExecution.setVariable("restErrorCode", statusCode);
+                delegateExecution.setVariable("manualRetryRest", false);
                 throw new BpmnError("Error_RestServiceError");
             } else {
                 throw new RuntimeException("try again");
