@@ -1,9 +1,6 @@
 package com.example.workflow;
 
 import lombok.RequiredArgsConstructor;
-import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.impl.context.Context;
-import org.camunda.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +21,7 @@ public class RestConnector {
             return exchange.getStatusCodeValue();
         } catch (Exception e) {
             System.err.println("  FAILURE CALL_REST (" + tenantId + ") :: FIX the error and re-run task ");
-            throw new RuntimeException(e.getMessage());
+            throw e;
         }
 
     }
