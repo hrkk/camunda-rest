@@ -31,11 +31,6 @@ public class RestServiceJavaDelegate implements JavaDelegate {
         // 1. call external service
         try {
             int statusCode = connector.execute(delegateExecution.getTenantId());
-//            if (statusCode != 200) {
-//                handleFailure(delegateExecution, retriesLeft, statusCode);
-//            }
-            // 2. business logic (long running task)
-          //  this.businessLogic(delegateExecution.getTenantId());
             System.out.println("END " + new Date() + " TaskId=" + delegateExecution.getId() + ", myVariable=" + delegateExecution.getVariable("myVariable") + ", TenantId=" + delegateExecution.getTenantId() + ", RestStatus=" + statusCode);
         } catch (ResourceAccessException | HttpServerErrorException e) {
             System.err.println(e.getClass() + " " + e.getMessage());
