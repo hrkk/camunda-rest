@@ -23,6 +23,8 @@ public class DemoRestClientApplication {
 		}
 		if("LONG_RUN".equals(state)) {
 			Thread.sleep(25000);
+		} else {
+			Thread.sleep(2000);
 		}
 		return ResponseEntity.ok("hello, state=" + state);
 	}
