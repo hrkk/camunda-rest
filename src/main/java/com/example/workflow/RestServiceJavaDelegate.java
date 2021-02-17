@@ -18,7 +18,7 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
-public class CallRestJavaDelegate implements JavaDelegate {
+public class RestServiceJavaDelegate implements JavaDelegate {
 
     private final RestConnector connector;
 
@@ -55,11 +55,5 @@ public class CallRestJavaDelegate implements JavaDelegate {
         } else {
             throw new RuntimeException("try again");
         }
-    }
-
-    private void businessLogic(String tenantId) throws InterruptedException {
-        System.out.println("  START BUSINESS_LOGIC (" + tenantId + ")");
-        Thread.sleep(5000);
-        System.out.println("  END BUSINESS_LOGIC (" + tenantId + ")");
     }
 }

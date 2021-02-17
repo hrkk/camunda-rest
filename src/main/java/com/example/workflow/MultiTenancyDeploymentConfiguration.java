@@ -12,18 +12,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(Ordering.DEFAULT_ORDER + 1)
-public class MyCustomConfiguration extends AbstractCamundaConfiguration {
+public class MultiTenancyDeploymentConfiguration extends AbstractCamundaConfiguration {
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
 
         System.err.println("preInit");
-        RepositoryService repositoryService= processEngineConfiguration.getRepositoryService();
-//
-//        repositoryService.createDeployment()
-//                .tenantId("020")
-//                .addClasspathResource("processes/workflow-timer.bpmn")
-//                .deploy();
+
 
 
     }
@@ -36,5 +31,16 @@ public class MyCustomConfiguration extends AbstractCamundaConfiguration {
     @Override
     public void postProcessEngineBuild(ProcessEngine processEngine) {
         System.err.println("postProcessEngineBuild");
+        RepositoryService repositoryService= processEngine.getRepositoryService();
+
+        repositoryService.createDeployment()
+                .tenantId("020")
+                .addClasspathResource("processes/workflow-timer.bpmn")
+                .deploy();
+
+        repositoryService.createDeployment()
+                .tenantId("369")
+                .addClasspathResource("processes/workflow-timer.bpmn")
+                .deploy();
     }
 }

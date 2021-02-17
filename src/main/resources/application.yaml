@@ -4,7 +4,9 @@ camunda.bpm.admin-user:
   id: demo
   password: demo
 
-# -----------------------------------
+# -------------------------------------------------------------
+#  Use MultiTenancyDeploymentConfiguration for auto-deployment
+# -------------------------------------------------------------
 camunda.bpm.auto-deployment-enabled: false
 
 #  ---------------------------------
