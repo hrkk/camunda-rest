@@ -27,3 +27,7 @@ hs_err_pid*
 /camunda-h2-database.trace.db
 /rest-scheduler.iml
 /target/*
+/client/target/*
+/workflow/target/*
+/client/client.iml
+/workflow/workflow.iml
