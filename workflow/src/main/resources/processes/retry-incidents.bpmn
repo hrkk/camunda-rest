@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1h3xtom" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:process id="Process_37" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_059klkw" sourceRef="StartEvent_1" targetRef="Activity_10473lc" />
+    <bpmn:serviceTask id="Activity_10473lc" name="Call Rest service" camunda:class="com.example.workflow.RestServiceIncidensJavaDelegate">
+      <bpmn:incoming>Flow_059klkw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0plmqt2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0vvac93">
+      <bpmn:incoming>Flow_0plmqt2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0plmqt2" sourceRef="Activity_10473lc" targetRef="Event_0vvac93" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_059klkw</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_12d5o04">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">0 0/1 * * * ?</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_37">
+      <bpmndi:BPMNEdge id="Flow_0plmqt2_di" bpmnElement="Flow_0plmqt2">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="432" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_059klkw_di" bpmnElement="Flow_059klkw">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_01bb8p7_di" bpmnElement="Activity_10473lc">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vvac93_di" bpmnElement="Event_0vvac93">
+        <dc:Bounds x="432" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xxqcum_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

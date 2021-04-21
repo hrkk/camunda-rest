@@ -14,7 +14,7 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
-public class RestServiceJavaDelegate implements JavaDelegate {
+public class RestService3JavaDelegate implements JavaDelegate {
 
     private final RestConnector connector;
 
@@ -31,6 +31,7 @@ public class RestServiceJavaDelegate implements JavaDelegate {
         // 1. call external service
         try {
             int statusCode = connector.execute(delegateExecution.getTenantId());
+            delegateExecution.setVariable("success", true);
             System.out.println("END " + new Date() + " TaskId=" + delegateExecution.getId() + ", myVariable=" + delegateExecution.getVariable("myVariable") + ", TenantId=" + delegateExecution.getTenantId() + ", RestStatus=" + statusCode);
         } catch (ResourceAccessException | HttpServerErrorException e) {
             System.err.println(e.getClass() + " " + e.getMessage());
@@ -42,7 +43,7 @@ public class RestServiceJavaDelegate implements JavaDelegate {
         if (retriesLeft <= 1) {
             System.err.println("Create BpmnError for processInstanceId="+delegateExecution.getProcessInstanceId());
             delegateExecution.setVariable("manualRetryRest", false);
-            throw new BpmnError("Error_RestServiceError","My Error Message", e);
+            delegateExecution.setVariable("success", false);
         } else {
             throw e;
         }

@@ -35,12 +35,12 @@ public class MultiTenancyDeploymentConfiguration extends AbstractCamundaConfigur
 
         repositoryService.createDeployment()
                 .tenantId("020")
-                .addClasspathResource("processes/workflow-timer.bpmn")
+                .addClasspathResource("processes/retry-incidents.bpmn")
                 .deploy();
 
-        repositoryService.createDeployment()
-                .tenantId("369")
-                .addClasspathResource("processes/workflow-timer.bpmn")
-                .deploy();
+//        repositoryService.createDeployment()
+//                .tenantId("369")
+//                .addClasspathResource("processes/workflow-timer.bpmn")
+//                .deploy();
     }
 }

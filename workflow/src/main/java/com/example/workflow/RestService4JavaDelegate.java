@@ -7,6 +7,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.impl.context.Context;
 import org.camunda.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Service
-public class RestServiceJavaDelegate implements JavaDelegate {
+public class RestService4JavaDelegate implements JavaDelegate {
 
     private final RestConnector connector;
 
@@ -30,9 +31,9 @@ public class RestServiceJavaDelegate implements JavaDelegate {
         System.out.println("\n\n" + "BEGIN " + new Date() + " TaskId=" + delegateExecution.getId() + ", TenantId=" + delegateExecution.getTenantId() + ", retries_left=" + retriesLeft + ", manualRetryRest=" + (delegateExecution.getVariable("manualRetryRest") != null ? "true" : "false") + " ProcessInstanceId="+delegateExecution.getProcessInstanceId());
         // 1. call external service
         try {
-            int statusCode = connector.execute(delegateExecution.getTenantId());
+            int statusCode = connector.execute2(delegateExecution.getTenantId());
             System.out.println("END " + new Date() + " TaskId=" + delegateExecution.getId() + ", myVariable=" + delegateExecution.getVariable("myVariable") + ", TenantId=" + delegateExecution.getTenantId() + ", RestStatus=" + statusCode);
-        } catch (ResourceAccessException | HttpServerErrorException e) {
+        } catch (ResourceAccessException | HttpServerErrorException  | HttpClientErrorException e ) {
             System.err.println(e.getClass() + " " + e.getMessage());
             handleFailure(delegateExecution, retriesLeft, e);
         }
@@ -42,7 +43,7 @@ public class RestServiceJavaDelegate implements JavaDelegate {
         if (retriesLeft <= 1) {
             System.err.println("Create BpmnError for processInstanceId="+delegateExecution.getProcessInstanceId());
             delegateExecution.setVariable("manualRetryRest", false);
-            throw new BpmnError("Error_RestServiceError","My Error Message", e);
+            throw new BpmnError("Error_RestService2Error","My Error Message", e);
         } else {
             throw e;
         }

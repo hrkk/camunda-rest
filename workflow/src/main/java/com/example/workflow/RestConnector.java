@@ -23,6 +23,17 @@ public class RestConnector {
             System.err.println("  FAILURE CALL_REST (" + tenantId + ") :: FIX the error and re-run task ");
             throw e;
         }
+    }
 
+    public int execute2(String tenantId) {
+        System.out.println("  START CALL REST (" + tenantId + ")");
+        try {
+            ResponseEntity<String> exchange = restTemplate.exchange("http://localhost:9080/hello2", HttpMethod.GET, new HttpEntity<>(null), String.class);
+            System.out.println("  END CALL_REST (" + tenantId + ")");
+            return exchange.getStatusCodeValue();
+        } catch (Exception e) {
+            System.err.println("  FAILURE CALL_REST (" + tenantId + ") :: FIX the error and re-run task ");
+            throw e;
+        }
     }
 }
